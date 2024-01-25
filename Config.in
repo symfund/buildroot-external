@@ -1,0 +1,1 @@
+source "$BR2_EXTERNAL_EXTPACK_PATH/package/lvgl/Config.in"
