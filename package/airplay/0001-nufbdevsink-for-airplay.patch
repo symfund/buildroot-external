@@ -1,0 +1,23 @@
+diff -urN a/uxplay.cpp b/uxplay.cpp
+--- a/uxplay.cpp	2024-01-08 01:41:41.000000000 -0500
++++ b/uxplay.cpp	2024-01-17 03:38:11.236384009 -0500
+@@ -598,7 +598,7 @@
+     printf("          another choice when using v4l2h264dec: v4l2convert\n");
+     printf("-vs ...   Choose the GStreamer videosink; default \"autovideosink\"\n");
+     printf("          some choices: ximagesink,xvimagesink,vaapisink,glimagesink,\n");
+-    printf("          gtksink,waylandsink,osxvideosink,kmssink,d3d11videosink etc.\n");
++    printf("          gtksink,waylandsink,osxvideosink,kmssink,d3d11videosink,nufbdevsink etc.\n");
+     printf("-vs 0     Streamed audio only, with no video display window\n");
+     printf("-v4l2     Use Video4Linux2 for GPU hardware h264 decoding\n");
+     printf("-bt709    Sometimes needed for Raspberry Pi with GStreamer < 1.22 \n"); 
+@@ -1935,6 +1935,10 @@
+                "Use Alt-Enter key combination to toggle into/out of full-screen mode");
+     }
+ 
++    if (videosink == "nufbdevsink" && use_video) {
++        videosink.append(" ! fakesink");
++    }
++
+     if (bt709_fix && use_video) {
+         video_parser.append(" ! ");
+         video_parser.append(BT709_FIX);

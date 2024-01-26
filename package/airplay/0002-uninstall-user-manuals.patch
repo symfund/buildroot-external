@@ -1,0 +1,16 @@
+diff -urN a/CMakeLists.txt b/CMakeLists.txt
+--- a/CMakeLists.txt	2024-01-08 01:41:41.000000000 -0500
++++ b/CMakeLists.txt	2024-01-25 21:17:07.062238005 -0500
+@@ -54,9 +54,9 @@
+ 		   )
+ 
+ install( TARGETS  uxplay RUNTIME DESTINATION bin )
+-install( FILES uxplay.1 DESTINATION ${CMAKE_INSTALL_MANDIR}/man1 )
+-install( FILES README.md README.txt README.html LICENSE DESTINATION ${CMAKE_INSTALL_DOCDIR} ) 
+-install( FILES lib/llhttp/LICENSE-MIT DESTINATION ${CMAKE_INSTALL_DOCDIR}/llhttp ) 
++#install( FILES uxplay.1 DESTINATION ${CMAKE_INSTALL_MANDIR}/man1 )
++#install( FILES README.md README.txt README.html LICENSE DESTINATION ${CMAKE_INSTALL_DOCDIR} ) 
++#install( FILES lib/llhttp/LICENSE-MIT DESTINATION ${CMAKE_INSTALL_DOCDIR}/llhttp ) 
+ 
+ # uninstall target
+ if(NOT TARGET uninstall)
