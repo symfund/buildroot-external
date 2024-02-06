@@ -1,4 +1,2 @@
 source "$BR2_EXTERNAL_EXTPACK_PATH/package/lvgl/Config.in"
 source "$BR2_EXTERNAL_EXTPACK_PATH/package/airplay/Config.in"
-source "$BR2_EXTERNAL_EXTPACK_PATH/package/openssh-server-conf/Config.in"
-source "$BR2_EXTERNAL_EXTPACK_PATH/package/ip-static-conf/Config.in"
