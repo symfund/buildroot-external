@@ -1,2 +1,31 @@
+
+menu "Packages source location"
+
+config BR2_TFA_SRC_DIR
+        string "Trusted Firmware for Arm Source Directory"
+        default ""
+        help
+          Directory to the source code of Arm Trusted Firmware.
+
+config BR2_UBOOT_SRC_DIR
+        string "U-Boot Source Directory"
+        default ""
+        help
+          Directory to the source code of U-Boot.
+
+config BR2_OPTEE_OS_SRC_DIR
+        string "optee-os Source Directory"
+        default ""
+        help
+          Directory to the source code of optee-os.
+
+config BR2_LINUX_SRC_DIR
+        string "Linux Source Directory"
+        default ""
+        help
+          Directory to the source code of Linux.
+
+endmenu
+
 source "$BR2_EXTERNAL_EXTPACK_PATH/package/lvgl/Config.in"
 source "$BR2_EXTERNAL_EXTPACK_PATH/package/airplay/Config.in"
