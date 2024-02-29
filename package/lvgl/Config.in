@@ -3,6 +3,12 @@ config BR2_PACKAGE_LVGL
         select BR2_PACKAGE_HOST_CMAKE
 
 if BR2_PACKAGE_LVGL
+        if BR2_PACKAGE_WESTON
+                config BR2_PACKAGE_LVGL_WAYLAND
+                        bool "built as a Wayland client"
+                        select BR2_PACKAGE_LVGL_WAYLAND_CLIENT
+        endif
+
 	config BR2_PACKAGE_LVGL_TOUCHSCREEN
 		bool "built with touchscreen support"
 
@@ -17,11 +23,5 @@ if BR2_PACKAGE_LVGL
         			select BR2_PACKAGE_LVGL_RESISTIVE_TOUCHSCREEN
 		endchoice
 
-	endif
-
-	if BR2_PACKAGE_WESTON
-		config BR2_PACKAGE_LVGL_WAYLAND
-			bool "built as a Wayland client"
-			select BR2_PACKAGE_LVGL_WAYLAND_CLIENT
 	endif
 endif

@@ -1,0 +1,6 @@
+config BR2_PACKAGE_AUTOLOGIN
+	bool "autologin"
+	if BR2_PACKAGE_AUTOLOGIN
+		config BR2_PACKAGE_AUTOLOGIN_WITHOUT_PASSWORD
+			bool "without typing a user name or password"
+	endif
