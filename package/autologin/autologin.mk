@@ -9,7 +9,6 @@ define AUTOLOGIN_INSTALL_TARGET_CMDS
 	@echo "=====> autologin without typing a user name or password <====="
 
 	@if grep -Eq "^BR2_PACKAGE_AUTOLOGIN_WITHOUT_PASSWORD=y$\" ${BR2_CONFIG}; then \
-		echo "auto login without typing a user name or password."; \
 		sed -i 's|^.*respawn:/sbin/getty.*|console::respawn:-/bin/sh|' ${TARGET_DIR}/etc/inittab; \
 	else \
 		cp -f $(TOPDIR)/package/busybox/inittab ${TARGET_DIR}/etc/inittab; \
