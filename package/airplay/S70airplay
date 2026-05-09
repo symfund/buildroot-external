@@ -2,7 +2,7 @@
 
 NAME=uxplay
 DAEMON=/usr/bin/$NAME
-UXPLAY_ARGS="-vd v4l2h264dec -vc videoconvert -vs nufbdevsink"
+UXPLAY_ARGS="-srgb no -bt709 -fs -vd v4l2h264dec -vc videoconvert -vs nufbdevsink"
 
 case "$1" in
     start)

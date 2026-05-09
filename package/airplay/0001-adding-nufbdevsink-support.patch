@@ -1,0 +1,93 @@
+diff -urN a/renderers/video_renderer.c b/renderers/video_renderer.c
+--- a/renderers/video_renderer.c	2025-04-23 12:12:31.000000000 +0800
++++ b/renderers/video_renderer.c	2025-08-13 09:34:22.270954692 +0800
+@@ -292,7 +292,7 @@
+             append_videoflip(launch, &videoflip[0], &videoflip[1]);
+             g_string_append(launch, converter);
+             g_string_append(launch, " ! ");
+-            g_string_append(launch, "videoscale ! ");
++            /* g_string_append(launch, "videoscale ! "); */
+             g_string_append(launch, videosink);
+             g_string_append(launch, " name=");
+             g_string_append(launch, videosink);
+diff -urN a/uxplay.cpp b/uxplay.cpp
+--- a/uxplay.cpp	2025-04-23 12:12:31.000000000 +0800
++++ b/uxplay.cpp	2025-08-13 09:38:09.264028836 +0800
+@@ -125,6 +125,11 @@
+ static unsigned char audio_type = 0x00;
+ static unsigned char previous_audio_type = 0x00;
+ static bool fullscreen = false;
++static std::string nswidth = "";
++static std::string nsheight = "";
++static std::string nsxpos = "";
++static std::string nsypos = "";
++static std::string nsrotate = "";
+ static std::string coverart_filename = "";
+ static std::string metadata_filename = "";
+ static bool do_append_hostname = true;
+@@ -698,7 +703,7 @@
+     printf("          another choice when using v4l2h264dec: v4l2convert\n");
+     printf("-vs ...   Choose the GStreamer videosink; default \"autovideosink\"\n");
+     printf("          some choices: ximagesink,xvimagesink,vaapisink,glimagesink,\n");
+-    printf("          gtksink,waylandsink,osxvideosink,kmssink,d3d11videosink etc.\n");
++    printf("          gtksink,waylandsink,osxvideosink,kmssink,d3d11videosink,nufbdevsink etc.\n");
+     printf("-vs 0     Streamed audio only, with no video display window\n");
+     printf("-v4l2     Use Video4Linux2 for GPU hardware h264 decoding\n");
+     printf("-bt709    Sometimes needed for Raspberry Pi models using Video4Linux2 \n");
+@@ -1322,6 +1327,21 @@
+             h265_support = true;
+         } else if (arg == "-nofreeze") {
+             nofreeze = true;
++        } else if (arg == "-xpos") {
++      	    if (!option_has_value(i, argc, arg, argv[i+1])) exit(1);
++      	    nsxpos= argv[++i];
++        } else if (arg == "-ypos") {
++            if (!option_has_value(i, argc, arg, argv[i+1])) exit(1);
++            nsypos= argv[++i];
++        } else if (arg == "-width") {
++            if (!option_has_value(i, argc, arg, argv[i+1])) exit(1);
++            nswidth = argv[++i];
++        } else if (arg == "-height") {
++            if (!option_has_value(i, argc, arg, argv[i+1])) exit(1);
++            nsheight = argv[++i];
++        } else if (arg == "-rotate") {
++            if (!option_has_value(i, argc, arg, argv[i+1])) exit(1);
++            nsrotate = argv[++i];
+         } else {
+             fprintf(stderr, "unknown option %s, stopping (for help use option \"-h\")\n",argv[i]);
+             exit(1);
+@@ -2377,6 +2397,34 @@
+                "Use Alt-Enter key combination to toggle into/out of full-screen mode");
+     }
+ 
++    if (videosink == "nufbdevsink" && videosink_options.empty() && use_video) {
++        if (fullscreen) {
++            videosink_options.append(" ! fakesink ");
++        } else {
++      	     if (!nsxpos.empty()) {
++      	         videosink_options.append(" x-pos=");
++      	         videosink_options.append(nsxpos);
++            }
++            if (!nsypos.empty()) {
++                videosink_options.append(" y-pos=");
++                videosink_options.append(nsypos);
++      	     }
++      	     if (!nswidth.empty()) {
++      	         videosink_options.append(" width=");
++      	         videosink_options.append(nswidth);
++      	     }
++            if (!nsheight.empty()) {
++                videosink_options.append(" height=");
++                videosink_options.append(nsheight);
++            }
++            if (!nsrotate.empty()) {
++                videosink_options.append(" rotate=");
++                videosink_options.append(nsrotate);
++            }
++            videosink_options.append(" ! fakesink ");
++        }
++    }
++
+     if (bt709_fix && use_video) {
+         video_parser.append(" ! ");
+         video_parser.append(BT709_FIX);
